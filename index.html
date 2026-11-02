@@ -1,0 +1,778 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>For Nick ♡</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --cream: #fffaf7;
+  --pink: #f4dfe1;
+  --rose: #c58f99;
+  --dark: #74545a;
+  --muted: #a58a8d;
+  --white: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--cream);
+  color: var(--dark);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 10% 20%, #f8e7e8 0, transparent 30%),
+    radial-gradient(circle at 90% 80%, #f6e8e2 0, transparent 30%);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* MUSIC PLAYER */
+
+.music-player {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.music-btn {
+  background: rgba(255,255,255,.85);
+  border: 1px solid #ead4d7;
+  color: var(--dark);
+  padding: 12px 17px;
+  border-radius: 30px;
+  font-size: 12px;
+  box-shadow: 0 5px 20px rgba(100,60,60,.07);
+}
+
+/* INTRO */
+
+.intro {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.intro-content {
+  max-width: 650px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-size: 10px;
+  color: var(--rose);
+  margin-bottom: 25px;
+}
+
+.intro h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(43px, 8vw, 75px);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.intro h1 span {
+  color: var(--rose);
+  font-style: italic;
+}
+
+.intro p {
+  margin-top: 22px;
+  color: var(--muted);
+  line-height: 2;
+  font-size: 14px;
+}
+
+.envelope-area {
+  margin: 55px auto 20px;
+  width: 220px;
+  height: 145px;
+  position: relative;
+  perspective: 700px;
+}
+
+.envelope {
+  position: absolute;
+  inset: 0;
+  background: #e9c9ce;
+  border-radius: 5px;
+  overflow: visible;
+  box-shadow: 0 12px 30px rgba(130,80,90,.12);
+}
+
+.envelope::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #f1dadd;
+  clip-path: polygon(0 0, 100% 0, 50% 60%);
+  z-index: 3;
+  transform-origin: top;
+  transition: transform .8s ease;
+}
+
+.envelope::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 110px solid #e4bcc3;
+  border-right: 110px solid #eacbd0;
+  border-top: 75px solid transparent;
+  border-bottom: 70px solid #e8c4ca;
+  z-index: 2;
+}
+
+.letter-paper {
+  position: absolute;
+  width: 175px;
+  height: 115px;
+  background: #fffaf7;
+  left: 22px;
+  top: 10px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: var(--rose);
+  font-size: 17px;
+  transition: transform .9s ease;
+}
+
+.seal {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  background: #bd818c;
+  border-radius: 50%;
+  color: white;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  left: calc(50% - 18px);
+  top: 57px;
+  font-size: 16px;
+}
+
+.envelope.open::before {
+  transform: rotateX(180deg);
+  z-index: 0;
+}
+
+.envelope.open .letter-paper {
+  transform: translateY(-85px);
+}
+
+.envelope.open .seal {
+  opacity: 0;
+}
+
+.primary-btn {
+  background: var(--rose);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 15px 32px;
+  margin-top: 35px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  transition: .3s;
+}
+
+.primary-btn:hover {
+  background: #aa7580;
+  transform: translateY(-3px);
+}
+
+#mainContent {
+  display: none;
+  animation: fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+section {
+  padding: 105px 25px;
+  text-align: center;
+}
+
+.section-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--rose);
+  margin-bottom: 18px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 400;
+  margin-bottom: 25px;
+}
+
+.section-title em {
+  color: var(--rose);
+}
+
+.letter-section {
+  background: rgba(255,255,255,.55);
+}
+
+.letter-card {
+  max-width: 720px;
+  margin: 40px auto 0;
+  padding: clamp(25px, 6vw, 65px);
+  background: #fffdfb;
+  border: 1px solid #f0e2df;
+  box-shadow: 0 15px 50px rgba(120,75,80,.05);
+  text-align: left;
+  line-height: 2.2;
+  font-size: 14px;
+  color: #80696d;
+  border-radius: 4px;
+}
+
+.letter-card .greeting {
+  font-family: 'Playfair Display', serif;
+  font-size: 27px;
+  color: var(--dark);
+  margin-bottom: 25px;
+}
+
+.letter-card p {
+  margin-bottom: 20px;
+}
+
+.signature {
+  margin-top: 35px;
+  font-family: 'Playfair Display', serif;
+  font-size: 23px;
+  font-style: italic;
+  color: var(--rose);
+}
+
+/* REASONS */
+
+.reasons-section {
+  background: #f8ebea;
+}
+
+.reasons-grid {
+  max-width: 850px;
+  margin: 45px auto 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.reason-card {
+  background: rgba(255,255,255,.72);
+  padding: 30px 23px;
+  border-radius: 5px;
+  text-align: left;
+  transition: .3s;
+}
+
+.reason-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(120,75,80,.07);
+}
+
+.reason-number {
+  color: var(--rose);
+  font-family: 'Playfair Display', serif;
+  font-size: 23px;
+  margin-bottom: 12px;
+}
+
+.reason-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.reason-card p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+.surprise-section {
+  background: #fffaf7;
+}
+
+.surprise-intro {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 2;
+}
+
+.surprise-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 35px auto;
+}
+
+.surprise-btn {
+  padding: 13px 21px;
+  border: 1px solid #dfbdc2;
+  background: transparent;
+  color: var(--dark);
+  border-radius: 30px;
+  font-size: 12px;
+  transition: .3s;
+}
+
+.surprise-btn:hover {
+  background: var(--pink);
+}
+
+.surprise-message {
+  display: none;
+  max-width: 520px;
+  margin: 20px auto;
+  padding: 35px 25px;
+  background: #f8ebea;
+  border-radius: 8px;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 19px;
+  line-height: 2;
+  animation: fadeIn .6s ease;
+}
+
+.final-section {
+  background: #f2dfe1;
+  padding: 120px 25px;
+}
+
+.final-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  font-size: clamp(35px, 6vw, 55px);
+  line-height: 1.5;
+}
+
+.final-section h2 em {
+  color: #aa727e;
+}
+
+.final-section p {
+  margin-top: 25px;
+  font-size: 13px;
+  line-height: 2;
+  color: #96777d;
+}
+
+footer {
+  text-align: center;
+  padding: 35px 15px;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: var(--rose);
+  font-size: 15px;
+}
+
+@media(max-width: 600px) {
+  .reasons-grid {
+    grid-template-columns: 1fr;
+  }
+
+  section {
+    padding: 80px 20px;
+  }
+
+  .music-player {
+    top: 12px;
+    right: 12px;
+  }
+
+  .music-btn {
+    font-size: 10px;
+    padding: 10px 13px;
+  }
+
+  .letter-card {
+    padding: 27px 22px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-player">
+  <button class="music-btn" id="musicButton" onclick="toggleMusic()">
+    ♫ Play music
+  </button>
+</div>
+
+<header class="intro">
+  <div class="intro-content">
+
+    <div class="eyebrow">to my spiderman</div>
+
+    <h1>A little piece<br>of <span>my heart.</span></h1>
+
+    <p>
+      To the person who makes my world<br>
+      a little softer and a lot more beautiful.
+    </p>
+
+    <div class="envelope-area">
+      <div class="envelope" id="envelope">
+        <div class="letter-paper">For Nick, ♡</div>
+        <div class="seal">♡</div>
+      </div>
+    </div>
+
+    <button class="primary-btn" onclick="openLetter()">
+      OPEN YOUR LETTER
+    </button>
+
+    <p style="font-size:10px; margin-top:20px;">
+      Take your time. This is all for you.
+    </p>
+
+  </div>
+</header>
+
+<main id="mainContent">
+
+  <section class="letter-section">
+
+    <div class="section-label">♡</div>
+    <h2 class="section-title">Dear <em>Nick,</em></h2>
+
+    <div class="letter-card">
+
+      <div class="greeting">My dearest Nick,</div>
+
+      <p>
+        I have been wanting to tell you so many things, and
+        I thought that creating this little website would be
+        a special way to put some of them into words.
+      </p>
+
+      <p>
+        First, thank you. Thank you for being part of my life
+        and for giving me so many reasons to smile. Thank you
+        for the conversations, the laughter, the little moments,
+        and even the ordinary days that somehow become special
+        simply because I get to share them with you.
+      </p>
+
+      <p>
+        I hope you know that I notice the little things, the things you 
+        do without expecting anything in return. The way you make an effort, 
+        the way you listen, and the way you make time for me despite us 
+        being literally 12 hours apart. I notice all the little gestures 
+        that might seem ordinary to you but mean so much to me.
+      </p>
+
+      <p>
+        I appreciate you more than I probably express.
+        I appreciate your presence (even though it's over the phone lang), 
+        your patience, your kindness, and the person that you are.
+        I don't need everything to be perfect.
+        I just want us to keep learning, growing,
+        understanding each other, and making more memories.
+      </p>
+
+      <p>
+        I hope I can be someone who makes you feel as appreciated
+        as you make me feel. I hope you never have to question
+        whether you matter to me, because you do.
+        Even on busy days, difficult days, and days when
+        words are not enough, I hope you remember that
+        you are someone I am genuinely grateful for.
+      </p>
+
+      <p>
+        If I could ask for one thing, it would be to keep
+        collecting little moments with you. More random
+        conversations, more laughter, more adventures,
+        more food trips, more pictures, and more memories
+        that we can look back on someday.
+      </p>
+
+      <p>
+        I made this because I wanted you to have something
+        you could revisit whenever you need a reminder
+        of how loved and appreciated you are.
+      </p>
+
+      <p>
+        You are important to me, Nick.
+        Thank you for being you, and thank you for being
+        part of my life.
+      </p>
+
+      <div class="signature">
+        With all my love,<br>
+        Isabelle ♡
+      </div>
+
+    </div>
+  </section>
+
+  <section class="reasons-section">
+
+    <div class="section-label">In case I don't say it enough</div>
+    <h2 class="section-title">Reasons why I <em>appreciate you.</em></h2>
+
+    <p class="surprise-intro">
+      There are so many, but here are a few of them.
+    </p>
+
+    <div class="reasons-grid">
+
+      <div class="reason-card">
+        <div class="reason-number">01</div>
+        <h3>Your presence</h3>
+        <p>
+          Because having you around makes even the simplest
+          moments feel meaningful. Even when sleeping,l at school, or anywhere else, I feel your presence and it makes me feel safe and loved.
+        </p>
+      </div>
+
+      <div class="reason-card">
+        <div class="reason-number">02</div>
+        <h3>Your little efforts</h3>
+        <p>
+          I notice the things you do, even the ones you
+          probably think I don't notice.
+        </p>
+      </div>
+
+      <div class="reason-card">
+        <div class="reason-number">03</div>
+        <h3>Your humor</h3>
+        <p>
+          Thank you for the laughter and for making
+          ordinary days more fun.
+        </p>
+      </div>
+
+      <div class="reason-card">
+        <div class="reason-number">04</div>
+        <h3>Your understanding</h3>
+        <p>
+          I appreciate the patience and understanding
+          you give me.
+        </p>
+      </div>
+
+      <div class="reason-card">
+        <div class="reason-number">05</div>
+        <h3>The way you care</h3>
+        <p>
+          Your care means more to me than you probably realize.
+        </p>
+      </div>
+
+      <div class="reason-card">
+        <div class="reason-number">06</div>
+        <h3>Simply being you</h3>
+        <p>
+          I don't need a reason to appreciate you.
+          Who you are is already enough.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="surprise-section">
+
+    <div class="section-label">A few little secrets</div>
+    <h2 class="section-title">Open when you <em>need it.</em></h2>
+
+    <p class="surprise-intro">
+      I prepared a few little reminders for you.<br>
+      Click each one to discover what's inside :p
+    </p>
+
+    <div class="surprise-buttons">
+
+      <button class="surprise-btn" onclick="showMessage(1)">
+        When you miss me ♡
+      </button>
+
+      <button class="surprise-btn" onclick="showMessage(2)">
+        When you're having a bad day
+      </button>
+
+      <button class="surprise-btn" onclick="showMessage(3)">
+        When you need a reminder
+      </button>
+
+    </div>
+
+    <div class="surprise-message" id="message1">
+      If you miss me, remember that somewhere,
+      I'm probably thinking about you too.
+      Sending you the biggest virtual kiss.
+      I can't wait until we make more memories together. ♡
+    </div>
+
+    <div class="surprise-message" id="message2">
+      I hope you give yourself some grace today.
+      You don't have to figure everything out at once.
+      I'm proud of you for doing your best.
+      I hope tomorrow feels a little lighter.
+    </div>
+
+    <div class="surprise-message" id="message3">
+      In case you ever forget:
+      You are appreciated. You are important.
+      You make a difference in my life.
+      And I am so grateful that I get to know you.
+      Never doubt that. ♡
+    </div>
+
+  </section>
+
+  <section class="final-section">
+
+    <div class="section-label">And one last thing...</div>
+
+    <h2>
+      Out of all the little<br>
+      things in life,<br>
+      <em>I'm grateful for you.</em>
+    </h2>
+
+    <p>
+      This little website will never be enough<br>
+      to express everything I feel,<br>
+      but I hope it reminds you how much you mean to me.
+      <br><br>
+      I love you, my Spiderman, my Captain America, my Baby, my Husband, my Boyfriend, my Nick.
+    </p>
+
+  </section>
+
+</main>
+
+<footer>
+  Made with love, from Isabelle to Nick. ♡
+</footer>
+
+<script>
+
+function openLetter() {
+
+  const envelope = document.getElementById("envelope");
+  const main = document.getElementById("mainContent");
+
+  envelope.classList.add("open");
+
+  setTimeout(() => {
+    main.style.display = "block";
+
+    setTimeout(() => {
+      document.getElementById("letter")
+        ?.scrollIntoView({behavior: "smooth"});
+    }, 100);
+
+  }, 900);
+
+}
+
+// BACKGROUND MUSIC
+
+const music = document.getElementById("bgMusic");
+const musicButton = document.getElementById("musicButton");
+
+async function toggleMusic() {
+
+  if (music.paused) {
+    try {
+      await music.play();
+      musicButton.innerHTML = "♫ Pause music";
+    } catch (error) {
+      alert("Please add your music.mp3 file to the website folder.");
+    }
+  } else {
+    music.pause();
+    musicButton.innerHTML = "♫ Play music";
+  }
+
+}
+
+music.addEventListener("ended", () => {
+  musicButton.innerHTML = "♫ Play music";
+});
+
+// HIDDEN MESSAGES
+
+function showMessage(number) {
+
+  const selected = document.getElementById("message" + number);
+
+  const allMessages = document.querySelectorAll(".surprise-message");
+
+  const wasVisible = selected.style.display === "block";
+
+  allMessages.forEach(message => {
+    message.style.display = "none";
+  });
+
+  if (!wasVisible) {
+    selected.style.display = "block";
+  }
+
+}
+
+</script>
+
+</body>
+</html>
